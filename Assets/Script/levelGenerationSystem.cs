@@ -3,6 +3,7 @@ using UnityEngine;
 class levelGenerationSystem : MonoBehaviour
 {
 	[SerializeField] private GameObject[] levelLayouts;
+	[SerializeField] private HighScoreRecordSystem recordSystem;
 	private int prevLayoutIndex;
 	private GameObject currentLayout;
 	public int currentLevel { get; private set; }
@@ -10,6 +11,8 @@ class levelGenerationSystem : MonoBehaviour
 	private void Awake()
 	{
 		prevLayoutIndex = 0;
+		currentLevel = 1;
+
 		GenerateRoom();
 	}
 
@@ -34,6 +37,16 @@ class levelGenerationSystem : MonoBehaviour
 		Destroy(currentLayout);
 	}
 
+	public void ResetGame()
+	{
+		DestroyRoom();
+		
+		prevLayoutIndex = 0;
+		currentLevel = 1;
+
+		GenerateRoom();
+	}
+
 	public void LevelUp()
 	{
 		currentLevel++;
@@ -42,7 +55,7 @@ class levelGenerationSystem : MonoBehaviour
 	public void GameEnd()
 	{
 		FindFirstObjectByType<movement>().gameObject.SetActive(false);
-
+		recordSystem.Record(currentLevel);
 		//Call Game Over UI
 	}
 }

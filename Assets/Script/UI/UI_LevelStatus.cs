@@ -1,16 +1,20 @@
+using TMPro;
 using UnityEngine;
 
-public class Ui_LevelStatus : MonoBehaviour
+public class UI_LevelStatus 
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    //dapetin data lvl ntar disini
+    public int NumberLevel = 1;
+    private TextMeshProUGUI textLabel;
+    public UI_LevelStatus (TextMeshProUGUI text)
     {
-        
+        this.textLabel = text;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateLevel()
     {
-        
+        textLabel.text = NumberLevel.ToString();
     }
+
+
 }

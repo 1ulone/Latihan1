@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class D_Block : MonoBehaviour
 {
+    private Collision2D _collision;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,6 +13,10 @@ public class D_Block : MonoBehaviour
     void Update()
     {
         
+    }
+    public void Touch()
+    {
+        OnCollisionEnter2D(_collision);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

@@ -1,25 +1,33 @@
 using System;
 using UnityEngine;
 
-public class OnTouchInterface : MonoBehaviour
+public class OnTouchInterface
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public enum InteractionType
     {
-        
+        Spike,
+        DBlock,
+        Goal
     }
-
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Respon to different type of interaction that happens inside the game
+    /// </summary>
+    /// <param name="typeOfInteraction">Specify the type of the interaction</param>
+    public void Touch(InteractionType typeOfInteraction)
     {
-        
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision) 
-    { 
-        if (collision.gameObject.CompareTag("Player")) 
+        switch (typeOfInteraction)
         {
-            Debug.Log("Hit");
-        } 
-    } 
+            case InteractionType.Spike:
+                Debug.Log("Dead!");
+                break;
+
+            case InteractionType.DBlock:
+                Debug.Log("Dissapar");
+                break;
+
+            case InteractionType.Goal:
+                Debug.Log("Finishhh!!!");
+                break;
+        }
+    }
 }

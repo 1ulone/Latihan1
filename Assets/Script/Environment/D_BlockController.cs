@@ -1,16 +1,13 @@
 using UnityEngine;
 
-public class D_BlockController : MonoBehaviour
+namespace InteractionSystem
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class D_BlockController
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private OnTouchInterface _onTouchInterface = new OnTouchInterface();
+        public void Disappear()
+        {
+            _onTouchInterface.Touch(OnTouchInterface.InteractionType.DBlock);
+        }
     }
 }

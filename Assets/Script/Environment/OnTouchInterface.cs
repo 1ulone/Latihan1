@@ -3,8 +3,9 @@ using UnityEngine;
 
 namespace InteractionSystem
 {
-    public class OnTouchInterface
+    public class OnTouchInterface : MonoBehaviour
     {
+        private InteractionSystem.D_BlockController _dBlockController;
         public enum InteractionType
         {
             Spike,
@@ -20,11 +21,11 @@ namespace InteractionSystem
             switch (typeOfInteraction)
             {
                 case InteractionType.Spike:
-                    Debug.Log("Dead!");
+                    //GameEnd();
                     break;
 
                 case InteractionType.DBlock:
-                    Debug.Log("Dissapar");
+                    _dBlockController.Touch();
                     break;
 
                 case InteractionType.Goal:
@@ -32,5 +33,6 @@ namespace InteractionSystem
                     break;
             }
         }
+        
     }
 }

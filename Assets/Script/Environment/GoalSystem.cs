@@ -1,11 +1,11 @@
-using UnityEngine;
-using InteractionSystem;
-
-public class GoalSystem
+namespace InteractionSystem
 {
-    private InteractionSystem.OnTouchInterface _onTouchInterface = new OnTouchInterface();
-    public void Goal()
+    public class GoalSystem
     {
-        _onTouchInterface.Touch(OnTouchInterface.InteractionType.Goal);
-    }
+        private OnTouchInterface _onTouchInterface;
+        public void Goal()
+        {
+            _onTouchInterface.Touch(OnTouchInterface.InteractionType.Goal);
+        }
+    }   
 }

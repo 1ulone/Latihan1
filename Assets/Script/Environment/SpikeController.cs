@@ -1,11 +1,11 @@
-using UnityEngine;
-using InteractionSystem;
-
-public class SpikeController
+namespace InteractionSystem
 {
-    private InteractionSystem.OnTouchInterface _onTouchInterface = new OnTouchInterface();
-    public void Spike()
+    public class SpikeController
     {
-        _onTouchInterface.Touch(OnTouchInterface.InteractionType.Spike);
-    }
+        private OnTouchInterface _onTouchInterface;
+        public void Spike()
+        {
+            _onTouchInterface.Touch(OnTouchInterface.InteractionType.Spike);
+        }
+    }   
 }

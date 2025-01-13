@@ -1,16 +1,11 @@
 using UnityEngine;
+using InteractionSystem;
 
-public class SpikeController : MonoBehaviour
+public class SpikeController
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private InteractionSystem.OnTouchInterface _onTouchInterface = new OnTouchInterface();
+    public void Spike()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        _onTouchInterface.Touch(OnTouchInterface.InteractionType.Spike);
     }
 }

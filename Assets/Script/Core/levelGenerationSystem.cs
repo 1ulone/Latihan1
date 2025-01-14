@@ -3,18 +3,24 @@ using UnityEngine;
 class levelGenerationSystem : MonoBehaviour
 {
 	[SerializeField] private GameObject[] levelLayouts;
-	[SerializeField] private HighScoreRecordSystem recordSystem;
+	[SerializeField] private Transform TilemapParent;
+	private HighScoreRecordSystem recordSystem;
 	private int prevLayoutIndex;
 	private GameObject currentLayout;
 	public int currentLevel { get; private set; }
 
 	private void Awake()
 	{
+		recordSystem = GetComponent<HighScoreRecordSystem>();
+
 		prevLayoutIndex = 0;
 		currentLevel = 1;
 
 		GenerateRoom();
 	}
+
+	private void Start()
+		=> UI_Gameplay_Manager.m.levelStatus.UpdateLevel(currentLevel);
 
 	private void GenerateRoom()
 	{
@@ -26,7 +32,7 @@ class levelGenerationSystem : MonoBehaviour
 			i=0;
 
 		DestroyRoom();
-		currentLayout = Instantiate(levelLayouts[i]);
+		currentLayout = Instantiate(levelLayouts[i], Vector3.zero, Quaternion.identity, TilemapParent);
 	}
 
 	private void DestroyRoom()
@@ -43,19 +49,28 @@ class levelGenerationSystem : MonoBehaviour
 		
 		prevLayoutIndex = 0;
 		currentLevel = 1;
+		UI_Gameplay_Manager.m.levelStatus.UpdateLevel(currentLevel);
 
 		GenerateRoom();
 	}
 
 	public void LevelUp()
 	{
+		DestroyRoom();
+
 		currentLevel++;
+
+		UI_Gameplay_Manager.m.timer.ResetTime(currentLevel);
+		UI_Gameplay_Manager.m.levelStatus.UpdateLevel(currentLevel);
+
+		GenerateRoom();
 	}
 
 	public void GameEnd()
 	{
 		FindFirstObjectByType<movement>().gameObject.SetActive(false);
-		recordSystem.Record(currentLevel);
-		//Call Game Over UI
+		int score = recordSystem.Record(currentLevel);
+		UI_Gameplay_Manager.m.gameOver.updateHighscore(score);
+		UI_Gameplay_Manager.m.gameOver.ActivePanelGO();
 	}
 }

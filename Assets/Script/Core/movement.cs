@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using InteractionSystem;
 
 class movement : MonoBehaviour
 {
 	[SerializeField] private int speed = 10;
 	[SerializeField] private int jumpForce = 50;
-	[SerializeField] private PlayerInput input; 
-
+	[SerializeField] private LayerMask touchLayer;
+	[SerializeField] private float checkRad = 1.25f;
+	
+	private PlayerInput input; 
 	private InputAction walk;
 	private InputAction jump;
 
@@ -15,8 +18,9 @@ class movement : MonoBehaviour
 	private bool onGround;
 	private float defaultGravity;
 
-	private void Start()
+	private void Awake()
 	{
+		input = FindFirstObjectByType<PlayerInput>();
 		rb = GetComponent<Rigidbody2D>();
 		defaultGravity = rb.gravityScale;
 	}
@@ -45,6 +49,21 @@ class movement : MonoBehaviour
 	{
 		Vector2 dir = walk.ReadValue<Vector2>(); 
 		rb.linearVelocity = new Vector2(dir.x * speed * (Time.fixedDeltaTime*10), rb.linearVelocityY);
+
+		Collider2D get =Physics2D.OverlapCircle(transform.position, checkRad, touchLayer);
+		if (get != null)
+			CheckTouch(get.gameObject);
+	}
+
+	private void CheckTouch(GameObject other)
+	{
+		if (other.TryGetComponent<OnTouchInterface>(out OnTouchInterface t))
+			t.Touch();
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.DrawWireSphere(transform.position, checkRad);
 	}
 }
 

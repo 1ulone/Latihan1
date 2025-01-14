@@ -1,11 +1,10 @@
-using System;
 using UnityEngine;
 
 namespace InteractionSystem
 {
     public class OnTouchInterface : MonoBehaviour
     {
-        private InteractionSystem.D_BlockController _dBlockController;
+        private D_BlockController _dBlockController;
         public enum InteractionType
         {
             Spike,
@@ -16,12 +15,15 @@ namespace InteractionSystem
         /// Respon to different type of interaction that happens inside the game
         /// </summary>
         /// <param name="typeOfInteraction">Specify the type of the interaction</param>
-        public void Touch(InteractionType typeOfInteraction)
+        public void Touch()
         {
+			TouchEvent();	
+
+			/*
             switch (typeOfInteraction)
             {
                 case InteractionType.Spike:
-                    //GameEnd();
+					Debug.Log("nigga");
                     break;
 
                 case InteractionType.DBlock:
@@ -29,10 +31,12 @@ namespace InteractionSystem
                     break;
 
                 case InteractionType.Goal:
-                    //LevelUp();
+					Debug.Log("you won");
                     break;
             }
+			*/
         }
-        
+		
+		protected virtual void TouchEvent() {}
     }
 }

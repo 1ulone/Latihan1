@@ -1,8 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.SceneManagement;
 
 public class UI_GameOver
 {
@@ -10,18 +8,19 @@ public class UI_GameOver
     private GameObject root;
     private CanvasGroup rootCG;
     private TextMeshProUGUI highscoreLabel;
+	private UI_Gameplay_Manager manager;
+	private UI_Timer timer;
     private bool isTransitioning = false;
 
-    private MonoBehaviour manager;
-
-    public UI_GameOver(GameObject roots, MonoBehaviour manager)
+    public UI_GameOver(GameObject roots, UI_Gameplay_Manager manager, UI_Timer timer)
     {
         this.root = roots;
         Transform highscoreTextTransform = root.transform.Find("Panel/Text - Score");
         this.highscoreLabel = highscoreTextTransform.GetComponent<TextMeshProUGUI>();
-        this.manager = manager;
         rootCG = root.GetComponent<CanvasGroup>();
+		this.manager = manager;
         rootCG.alpha = 0;
+		this.timer = timer;
     }
 
     public void ActivePanelGO()
@@ -32,17 +31,19 @@ public class UI_GameOver
             return;
         }
 
+		timer.stop = true;
+
         root.SetActive(true);
         isTransitioning = true;
-        manager.StartCoroutine(TransitionAlpha());
+        manager.GameOverTransition();
     }
 
     public void updateHighscore(int currentHighscore)
     {
-        highscoreLabel.text = currentHighscore.ToString();
+        highscoreLabel.text = "Level "+currentHighscore.ToString();
     }
 
-    private IEnumerator TransitionAlpha()
+    public IEnumerator TransitionAlpha()
     {
         while (rootCG.alpha < 1)
         {
@@ -54,14 +55,5 @@ public class UI_GameOver
         isTransitioning = false;
     }
 
-    public void Restart()
-    {
-        // Restart logic here
-        Debug.Log("Restart");
-    }
 
-    public void MainMenu()
-    {
-        SceneManager.LoadScene("Mainmenu");
-    }
 }

@@ -4,14 +4,20 @@ class HighScoreRecordSystem : MonoBehaviour
 {
 	private int prevLevel;
 
-	public void Record(int newLevel)
+	public int Record(int newLevel)
 	{
-		int lastHighScore = PlayerPrefs.GetInt("highscore", 0);
+		int lastHighScore = PlayerPrefs.GetInt("highscore");
 
 		if (lastHighScore < newLevel)
 		{
 			prevLevel = newLevel;
 			PlayerPrefs.SetInt("highscore", prevLevel);
 		}
+		else 
+		{
+			prevLevel = lastHighScore;
+		}
+
+		return prevLevel;
 	}
 }

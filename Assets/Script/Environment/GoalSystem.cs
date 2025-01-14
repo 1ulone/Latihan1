@@ -1,11 +1,21 @@
+using UnityEngine;
+
 namespace InteractionSystem
 {
-    public class GoalSystem
+    public class GoalSystem : OnTouchInterface 
     {
+		/*
         private OnTouchInterface _onTouchInterface;
-        public void Goal()
+		private void Awake()
+		{
+			_onTouchInterface = FindFirstObjectByType<OnTouchInterface>(); 
+		}
+		*/
+
+        protected override void TouchEvent()
         {
-            _onTouchInterface.Touch(OnTouchInterface.InteractionType.Goal);
+			FindFirstObjectByType<levelGenerationSystem>().LevelUp();
+//            _onTouchInterface.Touch(OnTouchInterface.InteractionType.Goal);
         }
     }   
 }

@@ -1,11 +1,21 @@
+using UnityEngine;
+
 namespace InteractionSystem
 {
-    public class SpikeController
+    public class SpikeController : OnTouchInterface 
     {
+		/*
         private OnTouchInterface _onTouchInterface;
-        public void Spike()
+		private void Awake()
+		{
+			_onTouchInterface = FindFirstObjectByType<OnTouchInterface>(); 
+		}
+		*/
+
+        protected override void TouchEvent()
         {
-            _onTouchInterface.Touch(OnTouchInterface.InteractionType.Spike);
+			FindFirstObjectByType<levelGenerationSystem>().GameEnd();
+//            _onTouchInterface.Touch(OnTouchInterface.InteractionType.Spike);
         }
     }   
 }

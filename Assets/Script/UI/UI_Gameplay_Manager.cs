@@ -1,16 +1,43 @@
+using TMPro;
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class UI_Gameplay_Manager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private UI_Timer timer;
+    private UI_GameOver gameOver;
+    private UI_LevelStatus levelStatus;
+    
+    [Header("Timer Settings")]
+    [SerializeField] TextMeshProUGUI timerText;
+    [SerializeField] float remainingTime;
+
+    [Header("Game Over Settings")]
+    [SerializeField] GameObject root;
+    
+    [Header("Level Settings")]
+    [SerializeField] TextMeshProUGUI LevelLabel;
+
     void Start()
     {
         
+        timer = new UI_Timer(timerText, remainingTime);
+        gameOver = new UI_GameOver(root, this); 
+        levelStatus = new UI_LevelStatus(LevelLabel);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        timer.countDown();
+        if(!timer.isOver)
+        {
+            levelStatus.UpdateLevel();
+           gameOver.updateHighscore(levelStatus.NumberLevel);
+        }
+        else
+        {
+            //disini ntar manggil gameover dari player
+            gameOver.ActivePanelGO();
+            Debug.Log("Udahan");
+        }
     }
 }
